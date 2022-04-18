@@ -1,0 +1,25 @@
+{
+  "name": "mrksman",
+  "version": "1.0.0",
+  "description": "A discord bot that keeps track of the latest deleted/edited message in a server.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^16.0.0",
+    "download": "^8.0.0",
+    "luxon": "^2.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "nodemonConfig": {
+    "ignore": ["temp/*"]
+}
+}
