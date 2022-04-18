@@ -20,7 +20,7 @@ module.exports = {
       const embed = new Discord.MessageEmbed({
         color: "YELLOW",
         title: "The Latest Edited Message",
-        description: "This is the latest edited message in this server.",
+        description: "*Disclaimer:* This command is janky as shit and will break.",
         fields: [
           { name: "Message Sender:", value: `<@${oldMessage.authorID}>` },
           { name: "Channel Name:", value: `\`${oldMessage.channel.name}\`` },
@@ -36,7 +36,7 @@ module.exports = {
               .setZone("UTC+6")
               .toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)}\``,
           },
-          { name: "Original Content:", value: oldMessage.content },
+          { name: "Original Content:", value: !oldMessage.content ? "No Content" : oldMessage.content },
           { name: "Edited Content:", value: newMessage.content },
         ],
       });
