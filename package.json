@@ -14,12 +14,15 @@
     "discord.js": "^12.5.3",
     "dotenv": "^16.0.0",
     "download": "^8.0.0",
+    "express": "^4.17.3",
     "luxon": "^2.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
   },
   "nodemonConfig": {
-    "ignore": ["temp/*"]
-}
+    "ignore": [
+      "temp/*"
+    ]
+  }
 }

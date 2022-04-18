@@ -2,11 +2,17 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const download = require("download");
 const path = require("path");
+const express = require("express");
 require("dotenv").config();
 
 const commandHandler = require("./commandHandler");
 
 const client = new Discord.Client();
+const app = express();
+
+app.get("/", (_, res) => res.send("BOT RUNNING"));
+
+app.listen(3000, () => console.log("\x1b[32m", `Server Started`));
 
 client.on("ready", () => {
   console.log("\x1b[32m", `Bot logged in as ${client.user.tag}`);
@@ -20,7 +26,7 @@ client.on("message", (message) => {
 
 // Delete Handler
 client.on("messageDelete", async (message) => {
-  
+
   fs.readdir("./temp/attachments", (err, files) => {
     if (err) throw err;
 
@@ -43,7 +49,7 @@ client.on("messageDelete", async (message) => {
 
 // Edit Handler
 client.on("messageUpdate", (oldMessage, newMessage) => {
-  
+
   const linkRegexp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
   if (linkRegexp.test(oldMessage.content)) return;
 
