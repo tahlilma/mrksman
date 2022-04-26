@@ -26,7 +26,7 @@ client.on("message", (message) => {
 
 // Delete Handler
 client.on("messageDelete", async (message) => {
-
+  
   fs.readdir("./temp/attachments", (err, files) => {
     if (err) throw err;
 
@@ -38,7 +38,9 @@ client.on("messageDelete", async (message) => {
   });
 
   if (message.attachments.first()) {
-    await download(message.attachments.first().url, "./temp/attachments");
+    message.attachments.forEach(async (item) => {
+      await download(item.url, "./temp/attachments");
+    });
   }
 
   fs.writeFile("./temp/delete.json", JSON.stringify(message), "utf-8", () => {
@@ -50,7 +52,8 @@ client.on("messageDelete", async (message) => {
 // Edit Handler
 client.on("messageUpdate", (oldMessage, newMessage) => {
 
-  const linkRegexp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+  const linkRegexp =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
   if (linkRegexp.test(oldMessage.content)) return;
 
   fs.writeFile(
