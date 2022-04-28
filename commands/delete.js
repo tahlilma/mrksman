@@ -8,15 +8,15 @@ module.exports = {
   name: "delete",
   alt: "d",
   handler: async (message) => {
-
     try {
+
       const data = JSON.parse(fs.readFileSync("./temp/delete.json", "utf-8"));
       data.channel = message.guild.channels.cache.get(data.channelID);
 
       const embed = new Discord.MessageEmbed({
         color: "RED",
         title: "The Latest Deleted Message",
-        description: "*DISCLAIMER:* This shit broken as hell.",
+        description: "> *DISCLAIMER:* This shit broken as hell.",
         fields: [
           { name: "Message Sender:", value: `<@${data.authorID}>` },
           { name: "Channel Name:", value: `\`${data.channel.name}\`` },
@@ -44,7 +44,7 @@ module.exports = {
       } else {
         message.channel.send(embed);
       }
-
+      
     } catch (error) {
       console.error(error);
       throwGeneric(message);

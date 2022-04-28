@@ -27,8 +27,13 @@ module.exports = {
             value:
               "```Shows the latest edited message. It sends the old message and the new one along with who sent it.```",
           },
+          {
+            name: `${prefix}cache (c)`,
+            value:
+              "```Gives a list of the 5 earlier deleted messages. You can view more info about them by invoking their indexes.```",
+          },
         ],
-        footer: { text: "Mrksman v0.2 @tahlil" },
+        footer: { text: "Mrksman v2.0 @tahlil" },
       });
 
       message.channel.send(embed);

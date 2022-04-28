@@ -6,6 +6,7 @@ const express = require("express");
 require("dotenv").config();
 
 const commandHandler = require("./commandHandler");
+const ErrorEmbed = require("./utils/ErrorEmbed");
 
 const client = new Discord.Client();
 const app = express();
@@ -26,7 +27,17 @@ client.on("message", (message) => {
 
 // Delete Handler
 client.on("messageDelete", async (message) => {
-  
+
+  if (message.content.length > 1024) {
+    message.channel.send(
+      new ErrorEmbed(
+        "Message Too Long",
+        "I cant cache anything longer than 1024 characters."
+      )
+    );
+    return;
+  }
+
   fs.readdir("./temp/attachments", (err, files) => {
     if (err) throw err;
 
@@ -47,10 +58,26 @@ client.on("messageDelete", async (message) => {
     console.log("\x1b[31m", "DELETE Detected and Cached");
   });
 
+  // I like big boobs
+  const cache = JSON.parse(fs.readFileSync("./temp/cache.json"), "utf8");
+  if (cache.length === 5) cache.shift();
+  cache.push(message);
+  fs.writeFileSync("./temp/cache.json", JSON.stringify(cache));
+
 });
 
 // Edit Handler
 client.on("messageUpdate", (oldMessage, newMessage) => {
+
+  if (oldMessage.content.length > 1024 || newMessage.content.length > 1024) {
+    oldMessage.channel.send(
+      new ErrorEmbed(
+        "Message Too Long",
+        "I cant cache anything longer than 1024 characters."
+      )
+    );
+    return;
+  }
 
   const linkRegexp =
     /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
@@ -64,7 +91,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => {
       console.log("\x1b[33m", "EDIT Detected and Cached");
     }
   );
-
+  
 });
 
 client.login(process.env.TOKEN);
