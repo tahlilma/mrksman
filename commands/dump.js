@@ -34,6 +34,7 @@ module.exports = {
                 fs.writeFileSync("./temp/cache.json", "[]", "utf-8");
                 message.channel.send(
                   new Discord.MessageEmbed({
+                    color: 'RED',
                     title: "Cache Cleared",
                     description: "Saved cache has been cleared successfully.",
                   })
